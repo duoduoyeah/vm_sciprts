@@ -51,7 +51,7 @@ def main():
     print("Qwen3 TinyChat - Interactive CLI")
     print("=" * 60)
     print("Type your message (multiple lines supported).")
-    print("Press Enter twice (empty line) to send your message.")
+    print("Press Enter 4 times (3 empty lines) to send your message.")
     print("Type 'exit', 'quit', or 'q' on a new line to end.")
     print("=" * 60)
     print()
@@ -61,14 +61,20 @@ def main():
             # Get multi-line user input
             print("You: ", end="", flush=True)
             lines = []
+            empty_count = 0
             while True:
                 line = input()
-                if line.strip() == "" and lines:  # Empty line after content means send
-                    break
-                if line.strip().lower() in ['exit', 'quit', 'q'] and not lines:
-                    print("\nGoodbye!")
-                    return
-                lines.append(line)
+                if line.strip() == "":
+                    empty_count += 1
+                    if empty_count >= 3 and lines:  # 3 empty lines after content means send
+                        break
+                    lines.append(line)
+                else:
+                    empty_count = 0
+                    if line.strip().lower() in ['exit', 'quit', 'q'] and not lines:
+                        print("\nGoodbye!")
+                        return
+                    lines.append(line)
             
             user_input = "\n".join(lines).strip()
             

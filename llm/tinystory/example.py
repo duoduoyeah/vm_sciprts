@@ -1,6 +1,6 @@
 from transformers import AutoModelForCausalLM, AutoTokenizer, GenerationConfig
 
-model = AutoModelForCausalLM.from_pretrained('roneneldan/TinyStories-33M')
+model = AutoModelForCausalLM.from_pretrained('roneneldan/TinyStories-1M')
 tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neo-125M")
 prompt = "Once upon a time there was"
 input_ids = tokenizer.encode(prompt, return_tensors="pt")

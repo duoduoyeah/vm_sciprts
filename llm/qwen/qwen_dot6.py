@@ -40,9 +40,8 @@ def main():
     print("=" * 60)
     print("Qwen3-0.6B Chat - Interactive CLI")
     print("=" * 60)
-    print("Type your message (multiple lines supported).")
-    print("Press Enter 4 times (3 empty lines) to send your message.")
-    print("Type 'exit', 'quit', or 'q' on a new line to end.")
+    print("Type your message and press Enter to send.")
+    print("Type 'exit', 'quit', or 'q' to end.")
     print("Type 'clear' to reset conversation history.")
     print("=" * 60)
     print()
@@ -52,33 +51,23 @@ def main():
     
     while True:
         try:
-            # Get multi-line user input
-            print("You: ", end="", flush=True)
-            lines = []
-            empty_count = 0
-            while True:
-                line = input()
-                if line.strip() == "":
-                    empty_count += 1
-                    if empty_count >= 3 and lines:  # 3 empty lines after content means send
-                        break
-                    lines.append(line)
-                else:
-                    empty_count = 0
-                    if line.strip().lower() in ['exit', 'quit', 'q'] and not lines:
-                        print("\nGoodbye!")
-                        return
-                    if line.strip().lower() == 'clear' and not lines:
-                        conversation_history = []
-                        print("\nConversation history cleared!\n")
-                        print("-" * 60)
-                        print()
-                        break
-                    lines.append(line)
+            # Get user input
+            user_input = input("You: ").strip()
             
-            user_input = "\n".join(lines).strip()
+            # Check for exit commands
+            if user_input.lower() in ['exit', 'quit', 'q']:
+                print("\nGoodbye!")
+                return
             
-            # Skip if somehow empty or if we just cleared history
+            # Check for clear command
+            if user_input.lower() == 'clear':
+                conversation_history = []
+                print("\nConversation history cleared!\n")
+                print("-" * 60)
+                print()
+                continue
+            
+            # Skip if empty
             if not user_input:
                 continue
             
